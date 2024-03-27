@@ -68,6 +68,29 @@
 			margin: 0;
 			padding: 0;
 		}
+		#audio-controls {
+      margin-top: 50px;
+    }
+    audio {
+      width: 80%;
+      display: block;
+      margin: 0 auto;
+    }
+    #progress-bar {
+      width: 80%;
+      margin: 20px auto;
+      background-color: #333;
+      height: 10px;
+      position: relative;
+    }
+    #progress {
+      height: 100%;
+      background-color: #FF0000;
+      width: 0%;
+    }
+    #time-stamp {
+      margin-top: 10px;
+    }
     </style>
 </head>
 <body>
@@ -79,12 +102,27 @@
         <a href="altar.html">Altar</a>
 		<a href="blue.html">Blue Hell</a>
     </nav>
+	
+	  <center>
+  <div id="audio-controls">
+    <audio id="audio" src="home.mp3"></audio>
+    <button id="play-pause-btn">Play</button>
+  </div>
+  <div id="progress-bar">
+    <div id="progress"></div>
+  </div>
+  <div id="time-stamp">0:00 / 0:00</div>
+
+
+
     <div class="container">
-        <img class="img" src="horse.png" alt="Image">
-        <section>
+	<section>
             <center>
 		    <p class="st" id="flavor-text">Random Flavor Text</p>
+			<p></p>
         </section>
+        <img class="img" src="horse.png" alt="Image">
+        
     </div>
 	
 	<script>
@@ -103,5 +141,55 @@
     document.getElementById("flavor-text").textContent = randomFlavorText;
   </script>
   
+  
+  
+  
+
+
+
+
+
+
+  <script>
+    const audio = document.getElementById('audio');
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const progressBar = document.getElementById('progress');
+    const timeStamp = document.getElementById('time-stamp');
+
+    playPauseBtn.addEventListener('click', togglePlayPause);
+    audio.addEventListener('timeupdate', updateProgressBar);
+    audio.addEventListener('ended', () => {
+      playPauseBtn.innerText = 'Play';
+    });
+
+    function togglePlayPause() {
+      if (audio.paused || audio.ended) {
+        audio.play();
+        playPauseBtn.innerText = 'Pause';
+      } else {
+        audio.pause();
+        playPauseBtn.innerText = 'Play';
+      }
+    }
+
+    function updateProgressBar() {
+      const currentTime = audio.currentTime;
+      const duration = audio.duration;
+      const progressPercentage = (currentTime / duration) * 100;
+      progressBar.style.width = `${progressPercentage}%`;
+
+      const currentMinutes = Math.floor(currentTime / 60);
+      const currentSeconds = Math.floor(currentTime % 60);
+      const durationMinutes = Math.floor(duration / 60);
+      const durationSeconds = Math.floor(duration % 60);
+
+      timeStamp.innerText = `${formatTime(currentMinutes)}:${formatTime(currentSeconds)} / ${formatTime(durationMinutes)}:${formatTime(durationSeconds)}`;
+    }
+
+    function formatTime(time) {
+      return time < 10 ? `0${time}` : time;
+    }
+  </script>
+ 
 </body>
 </html>
