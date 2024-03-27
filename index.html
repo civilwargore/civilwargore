@@ -21,7 +21,7 @@
         nav {
             display: flex;
             justify-content: center;
-            background-color: #7A0808;
+            background: linear-gradient(to bottom right, #000, #8B0000);
             padding: 10px;
         }
         nav a {
@@ -64,18 +64,44 @@
             border-radius: 10px;
             box-shadow: 0 0 20px #800000;
         }
+		.st	{
+			margin: 0;
+			padding: 0;
+		}
     </style>
 </head>
 <body>
     <header>
         <img src="title.png" alt="civilwargore.com">
     </header>
+	<nav>
+        <a href="index.html">Home</a>
+        <a href="altar.html">Altar</a>
+		<a href="blue.html">Blue Hell</a>
+    </nav>
     <div class="container">
         <img class="img" src="horse.png" alt="Image">
         <section>
             <center>
-		    <p>hosted from the altar</p>
+		    <p class="st" id="flavor-text">Random Flavor Text</p>
         </section>
     </div>
+	
+	<script>
+    const flavorTexts = [
+      "you are on civilwargore.com",
+	  ":)",
+	  "I love you",
+	  "puk",
+	  "do you believe in blessings ?",
+	  "hosted from the altar"
+    ];
+
+    const randomIndex = Math.floor(Math.random() * flavorTexts.length);
+    const randomFlavorText = flavorTexts[randomIndex];
+
+    document.getElementById("flavor-text").textContent = randomFlavorText;
+  </script>
+  
 </body>
 </html>
